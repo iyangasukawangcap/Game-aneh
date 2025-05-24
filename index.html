@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Duel Refleks 2 Pemain</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    #gameArea {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: red;
+      color: white;
+      font-size: 2rem;
+      transition: background-color 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+  <div id="gameArea">Tunggu warna hijau...</div>
+
+  <script>
+    const gameArea = document.getElementById('gameArea');
+    let canPress = false;
+    let winnerDeclared = false;
+
+    const randomTime = Math.floor(Math.random() * 5000) + 2000; // 2-7 detik
+
+    setTimeout(() => {
+      gameArea.style.backgroundColor = 'green';
+      gameArea.textContent = 'TEKAN SEKARANG! (A = P1 | L = P2)';
+      canPress = true;
+    }, randomTime);
+
+    document.addEventListener('keydown', function(e) {
+      if (winnerDeclared) return;
+
+      const key = e.key.toLowerCase();
+
+      if (!canPress) {
+        if (key === 'a') {
+          gameArea.textContent = 'Pemain 1 terlalu cepat! Pemain 2 Menang!';
+        } else if (key === 'l') {
+          gameArea.textContent = 'Pemain 2 terlalu cepat! Pemain 1 Menang!';
+        }
+        gameArea.style.backgroundColor = 'black';
+        winnerDeclared = true;
+        return;
+      }
+
+      if (key === 'a') {
+        gameArea.textContent = 'Pemain 1 Menang!';
+        gameArea.style.backgroundColor = 'blue';
+        winnerDeclared = true;
+      } else if (key === 'l') {
+        gameArea.textContent = 'Pemain 2 Menang!';
+        gameArea.style.backgroundColor = 'purple';
+        winnerDeclared = true;
+      }
+    });
+  </script>
+</body>
+</html>
